@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "181493004622",
+    "project_id": "politicalpreparednessapp-ae9ba",
+    "storage_bucket": "politicalpreparednessapp-ae9ba.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:181493004622:android:da66cd34dcb33bd19b061f",
+        "android_client_info": {
+          "package_name": "com.example.android.politicalpreparedness"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB78v7FAW7agIbK-3Xzn4c4O8N7jALyl40"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
