@@ -29,6 +29,8 @@ import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
+
+const val MOTION_LAYOUT_STATE = "motion_layout_state"
 class RepresentativeFragment : DataBindFragment<FragmentRepresentativeBinding>(),
     LocationPermissionsUtil.PermissionListener {
 
@@ -51,6 +53,12 @@ class RepresentativeFragment : DataBindFragment<FragmentRepresentativeBinding>()
 
         binding.representativeRecycler.adapter =
             RepresentativeListAdapter(RepresentativeListAdapter.RepresentativeListener {})
+
+        if (savedInstanceState != null) {
+            val motionLayoutState =   savedInstanceState.getInt(MOTION_LAYOUT_STATE)
+            binding.representativeContainer.transitionToState(motionLayoutState)
+        }
+
 
         viewModel.representatives.observe(viewLifecycleOwner) {
             if (it.isNullOrEmpty()) {

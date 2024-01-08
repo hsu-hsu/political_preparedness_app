@@ -70,7 +70,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{Html.fromHtml(@string/voting_location(viewModel.electionDetails.electionAdministrationBody.votingLocationFinderUrl), Html.FROM_HTML_MODE_LEGACY)}"
-            android:textColorLink="@color/gray50"
+            android:textColorLink="@color/link_text_color"
             app:layout_constraintStart_toStartOf="@id/election_date"
             app:layout_constraintTop_toBottomOf="@id/state_header" />
 
@@ -79,7 +79,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{Html.fromHtml(@string/ballot_information(viewModel.electionDetails.electionAdministrationBody.ballotInfoUrl), Html.FROM_HTML_MODE_LEGACY)}"
-            android:textColorLink="@color/gray50"
+            android:textColorLink="@color/link_text_color"
             app:layout_constraintStart_toStartOf="@id/election_date"
             app:layout_constraintTop_toBottomOf="@id/state_locations" />
 
