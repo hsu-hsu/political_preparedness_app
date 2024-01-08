@@ -54,11 +54,6 @@ class RepresentativeFragment : DataBindFragment<FragmentRepresentativeBinding>()
         binding.representativeRecycler.adapter =
             RepresentativeListAdapter(RepresentativeListAdapter.RepresentativeListener {})
 
-        if (savedInstanceState != null) {
-            val motionLayoutState =   savedInstanceState.getInt(MOTION_LAYOUT_STATE)
-            binding.representativeContainer.transitionToState(motionLayoutState)
-        }
-
 
         viewModel.representatives.observe(viewLifecycleOwner) {
             if (it.isNullOrEmpty()) {
@@ -105,6 +100,16 @@ class RepresentativeFragment : DataBindFragment<FragmentRepresentativeBinding>()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         permissionUtil.registerForPermissionResults(this)
+        if (savedInstanceState != null) {
+            val motionLayoutState = savedInstanceState.getInt(MOTION_LAYOUT_STATE)
+            binding.representativeContainer.transitionToState(motionLayoutState)
+        }
+
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt(MOTION_LAYOUT_STATE, binding.representativeContainer.currentState)
     }
 
     @RequiresPermission(android.Manifest.permission.ACCESS_FINE_LOCATION)
