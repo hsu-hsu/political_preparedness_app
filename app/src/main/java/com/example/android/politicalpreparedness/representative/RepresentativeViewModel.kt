@@ -1,7 +1,9 @@
 package com.example.android.politicalpreparedness.representative
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,11 +11,12 @@ import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.network.models.Address
 import com.example.android.politicalpreparedness.repository.ElectionsRepository
 import com.example.android.politicalpreparedness.repository.Result
+import com.example.android.politicalpreparedness.repository.dataOrThrow
 import com.example.android.politicalpreparedness.representative.model.Representative
 import com.example.android.politicalpreparedness.utils.SingleLiveEvent
 import kotlinx.coroutines.launch
 
-class RepresentativeViewModel(private val repository: ElectionsRepository) : ViewModel() {
+class RepresentativeViewModel(private val repository: ElectionsRepository, private val savedStateHandle: SavedStateHandle) : ViewModel() {
 
     //TODO: Establish live data for representatives and address
 
@@ -34,12 +37,25 @@ class RepresentativeViewModel(private val repository: ElectionsRepository) : Vie
     val message: SingleLiveEvent<Int> = SingleLiveEvent()
     val messageString = SingleLiveEvent<String>()
 
-    private val _representatives: MutableLiveData<Result<List<Representative>>> = MutableLiveData()
+    //val list: MutableLiveData<Result<List<Representative>>?> = savedStateHandle["representatives"]!!
+
+    private val _representatives: MutableLiveData<Result<List<Representative>>?> = MutableLiveData()
     val representatives: LiveData<List<Representative>> = Transformations.map(_representatives) {
         when (it) {
             is Result.Failure -> emptyList()
             is Result.Success -> it.data
             is Result.Loading -> emptyList()
+            else -> {
+                emptyList()
+            }
+        }
+    }
+
+    init {
+        val list: List<Representative>? = savedStateHandle["representatives"]
+        Log.i("List", list?.size.toString())
+        if(list != null) {
+            _representatives.value = Result.Success(list)
         }
     }
 
@@ -92,9 +108,11 @@ class RepresentativeViewModel(private val repository: ElectionsRepository) : Vie
         dataLoading.value = true
         viewModelScope.launch {
             _representatives.value = repository.searchRepresentatives(address)
+            //savedStateHandle["representatives"] = _representatives.value
+            //savedStateHandle.set("representatives", _representatives.value)
             when (val result = _representatives.value) {
                 is Result.Failure -> messageString.value = result.exception.message
-                is Result.Success,
+                is Result.Success -> savedStateHandle["representatives"] = _representatives.value?.dataOrThrow()
                 is Result.Loading,
                 null -> {
                 }

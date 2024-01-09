@@ -12,6 +12,7 @@ import com.example.android.politicalpreparedness.network.models.Election
 abstract class ElectionDatabase: RoomDatabase() {
 
     abstract val electionDao: ElectionDao
+    //abstract val representativesDao: RepresentativesDao
 
     companion object {
 

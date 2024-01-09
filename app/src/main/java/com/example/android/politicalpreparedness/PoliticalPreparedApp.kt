@@ -1,6 +1,7 @@
 package com.example.android.politicalpreparedness
 
 import android.app.Application
+import androidx.lifecycle.SavedStateHandle
 import com.example.android.politicalpreparedness.database.ElectionDao
 import com.example.android.politicalpreparedness.database.ElectionDatabase
 import com.example.android.politicalpreparedness.database.LocalDataSource
@@ -35,7 +36,7 @@ class PoliticalPreparedApp : Application() {
                 VoterInfoViewModel(get(), election)
             }
             viewModel { ElectionsViewModel(get()) }
-            viewModel { RepresentativeViewModel(get()) }
+            viewModel { RepresentativeViewModel(get(), SavedStateHandle()) }
             factory { GeocoderHelper.Factory(Dispatchers.IO) }
             single { ElectionDatabase.getInstance(this@PoliticalPreparedApp).electionDao as ElectionDao }
             single { CivicsApi.create() as CivicsApiService }
