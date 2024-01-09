@@ -108,8 +108,6 @@ class RepresentativeViewModel(private val repository: ElectionsRepository, priva
         dataLoading.value = true
         viewModelScope.launch {
             _representatives.value = repository.searchRepresentatives(address)
-            //savedStateHandle["representatives"] = _representatives.value
-            //savedStateHandle.set("representatives", _representatives.value)
             when (val result = _representatives.value) {
                 is Result.Failure -> messageString.value = result.exception.message
                 is Result.Success -> savedStateHandle["representatives"] = _representatives.value?.dataOrThrow()

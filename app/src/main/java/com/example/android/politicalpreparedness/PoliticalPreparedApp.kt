@@ -36,7 +36,7 @@ class PoliticalPreparedApp : Application() {
                 VoterInfoViewModel(get(), election)
             }
             viewModel { ElectionsViewModel(get()) }
-            viewModel { RepresentativeViewModel(get(), SavedStateHandle()) }
+            viewModel { RepresentativeViewModel(get(), get()) }
             factory { GeocoderHelper.Factory(Dispatchers.IO) }
             single { ElectionDatabase.getInstance(this@PoliticalPreparedApp).electionDao as ElectionDao }
             single { CivicsApi.create() as CivicsApiService }

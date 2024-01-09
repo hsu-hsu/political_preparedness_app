@@ -47,21 +47,12 @@ class RepresentativeFragment : DataBindFragment<FragmentRepresentativeBinding>()
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
-        binding.representativeContainer.setTransition(R.id.start, R.id.start)
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
 
         binding.representativeRecycler.adapter =
             RepresentativeListAdapter(RepresentativeListAdapter.RepresentativeListener {})
 
-
-        viewModel.representatives.observe(viewLifecycleOwner) {
-            if (it.isNullOrEmpty()) {
-                binding.representativeContainer.setTransition(R.id.start, R.id.start)
-            } else {
-                binding.representativeContainer.setTransition(R.id.start, R.id.end)
-            }
-        }
         viewModel.message.observe(viewLifecycleOwner) {
             it?.let {
                 showSnackbar(getString(it))

@@ -18,7 +18,7 @@ buildscript {
         version_androidx_legacy_support = '1.0.0'
         version_mockito = '2.8.9'
         version_dex_maker = '2.28.3'
-        version_koin = '3.2.2'
+        version_koin = '3.3.2'
         version_truth = '0.44'
         version_junit = '4.13.2'
         version_androidx_test_core = '1.2.0-beta01'
